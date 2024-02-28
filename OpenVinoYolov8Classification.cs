@@ -4,7 +4,7 @@ using Sdcb.OpenVINO.Extensions.OpenCvSharp4;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace yolov8_openvino
+namespace OpenVinoYOLO
 {
     public class OpenVinoYolov8Classification
     {

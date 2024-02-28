@@ -1,4 +1,5 @@
-﻿using OpenCvSharp;
+﻿using Newtonsoft.Json;
+using OpenCvSharp;
 using OpenCvSharp.Dnn;
 using Sdcb.OpenVINO;
 using Sdcb.OpenVINO.Extensions.OpenCvSharp4;
@@ -6,9 +7,10 @@ using System.Drawing;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
+
 namespace OpenVinoYOLO
 {
-    public class OpenVinoYolov8
+    public class OpenVinoYolov9
     {
         string model_xml_path { get; set; }
         string[] classes { get; set; }
@@ -26,10 +28,10 @@ namespace OpenVinoYOLO
         Dictionary<int, int> rowCaches { get; set; }
         int objectCount { get; set; }
 
-        public OpenVinoYolov8(string model_xml_path, bool use_gpu)
+        public OpenVinoYolov9(string model_xml_path, bool use_gpu)
         {
             this.model_xml_path = model_xml_path;
-            classes = XDocument.Load(model_xml_path).XPathSelectElement(@"/net/rt_info/model_info/labels")!.Attribute("value")!.Value.Split(" ");
+            classes = [.. JsonConvert.DeserializeObject<Dictionary<int, string>>(XDocument.Load(model_xml_path).XPathSelectElement(@"/net/rt_info/framework/names")!.Attribute("value")!.Value)!.Values];
             model = OVCore.Shared.ReadModel(model_xml_path);
             prePostProcessor = model.CreatePrePostProcessor();
             preProcessInputInfo = prePostProcessor.Inputs.Primary;
@@ -44,7 +46,7 @@ namespace OpenVinoYOLO
             rowCount = classes.Length + 4;
             colorMapper = [];
             rowCaches = [];
-            objectCount = (int)model.Outputs.Primary.Shape.ElementCount / rowCount;
+            objectCount = (int)model.Outputs[0].Shape.ElementCount / rowCount;
             int accumulation = 0;
             for (int i = 0; i < objectCount; i++)
             {
@@ -74,7 +76,7 @@ namespace OpenVinoYOLO
             using Tensor input = F32.AsTensor();
             inferRequest.Inputs.Primary = input;
             inferRequest.Run();
-            using Tensor output = inferRequest.Outputs.Primary;
+            using Tensor output = inferRequest.Outputs[0];
             Span<float> data = output.GetData<float>();
             float[] t = Transpose(data, output.Shape[1], output.Shape[2]);
             List<YoloPrediction> predictions = [];

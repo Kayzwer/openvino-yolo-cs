@@ -1,4 +1,4 @@
-namespace yolov8_openvino
+namespace OpenVinoYOLO
 {
     public class YoloClassifyPrediction(string className, int classIndex, float score)
     {

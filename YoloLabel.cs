@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace yolov8_openvino
+namespace OpenVinoYOLO
 {
     public class YoloLabel(int Id, string Name, Color Color)
     {

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace yolov8_openvino
+namespace OpenVinoYOLO
 {
     public class OpenVinoYolov8OBB
     {

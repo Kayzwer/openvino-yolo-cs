@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace yolov8_openvino
+namespace OpenVinoYOLO
 {
     public class YoloPrediction(YoloLabel label, RectangleF rectangle, float confidence)
     {
