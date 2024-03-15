@@ -8,7 +8,6 @@ namespace OpenVinoYOLO
 {
     public class OpenVinoYolov8Classification
     {
-        string model_xml_path { get; set; }
         string[] classes { get; set; }
         Model model { get; set; }
         PrePostProcessor prePostProcessor { get; set; }
@@ -22,7 +21,6 @@ namespace OpenVinoYOLO
 
         public OpenVinoYolov8Classification(string model_xml_path, bool use_gpu)
         {
-            this.model_xml_path = model_xml_path;
             classes = XDocument.Load(model_xml_path).XPathSelectElement(@"/net/rt_info/model_info/labels")!.Attribute("value")!.Value.Split(" ");
             model = OVCore.Shared.ReadModel(model_xml_path);
             prePostProcessor = model.CreatePrePostProcessor();

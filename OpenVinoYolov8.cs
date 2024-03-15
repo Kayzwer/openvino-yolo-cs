@@ -10,7 +10,6 @@ namespace OpenVinoYOLO
 {
     public class OpenVinoYolov8
     {
-        string model_xml_path { get; set; }
         string[] classes { get; set; }
         Model model { get; set; }
         PrePostProcessor prePostProcessor { get; set; }
@@ -28,7 +27,6 @@ namespace OpenVinoYOLO
 
         public OpenVinoYolov8(string model_xml_path, bool use_gpu)
         {
-            this.model_xml_path = model_xml_path;
             classes = XDocument.Load(model_xml_path).XPathSelectElement(@"/net/rt_info/model_info/labels")!.Attribute("value")!.Value.Split(" ");
             model = OVCore.Shared.ReadModel(model_xml_path);
             prePostProcessor = model.CreatePrePostProcessor();
@@ -45,11 +43,9 @@ namespace OpenVinoYOLO
             colorMapper = [];
             rowCaches = [];
             objectCount = (int)model.Outputs.Primary.Shape.ElementCount / rowCount;
-            int accumulation = 0;
             for (int i = 0; i < objectCount; i++)
             {
-                rowCaches.Add(i, accumulation);
-                accumulation += rowCount;
+                rowCaches.Add(i, i * rowCount);
             }
         }
 
