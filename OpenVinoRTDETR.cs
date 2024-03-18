@@ -45,7 +45,7 @@ namespace OpenVinoYOLO
             }
         }
 
-        public void SetupColor(Color[] colors)
+        public void SetupColors(Color[] colors)
         {
             if (colors.Length != classes.Length)
             {
