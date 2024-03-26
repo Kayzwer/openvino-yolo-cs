@@ -30,7 +30,7 @@ List<OBBPrediction> predictions = rtdetr.Predict(image, .5f, .5f);
 Extensions.DrawBoundingBox(image, predictions, 2, 16);
 ```
 
-## YOLOv9 object detection (https://github.com/WongKinYiu/yolov9)
+## YOLOv9 object detection (for ultralytics)
 ```
 OpenVinoYolov9 yolov9 = new("path/to/.xml", false);
 Color[] colors = [];
@@ -39,5 +39,3 @@ Image image = Image.FromFile("path/to/img");
 List<YoloPrediction> predictions = yolov9.Preidct((Bitmap)image, .5f, .5f);
 Extensions.DrawBoundingBox(image, predictions, 2, 16);
 ```
-
-Note: for the Yolov9.cs, it supports this [yolov9](https://github.com/WongKinYiu/yolov9), for the yolov9 from [ultralyutics](https://github.com/ultralytics/ultralytics), Yolov8.cs will work just fine as they are using the same output head.
