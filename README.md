@@ -30,7 +30,7 @@ List<OBBPrediction> predictions = rtdetr.Predict(image, .5f, .5f);
 Extensions.DrawBoundingBox(image, predictions, 2, 16);
 ```
 
-## YOLOv9 object detection (for ultralytics)
+## YOLOv9 object detection (for https://github.com/WongKinYiu/yolov9)
 ```
 OpenVinoYolov9 yolov9 = new("path/to/.xml", false);
 Color[] colors = [];
